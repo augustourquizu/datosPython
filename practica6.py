@@ -82,23 +82,61 @@ def elRango(numero:int) ->str:
 		return  "Entre 10 y 20"
 	else: return "Mayor a 20"
 
-def trabajo_o_descanso(genero:str,edad:int):
+def trabajo_o_descanso(genero:str,edad:int)->str:
 	if genero =="F" and (edad>=60 or edad <18):
 		return "A descansar"
 	if genero =="M" and (edad>=65 or edad <18):
 		return "A descansar"
 	else: return "A trabajar"
 
-def rango_10():
+def rango_10() ->str:
 	x=1
 	y=""
 	while x!=10:
 		y=y+ str(x) + ", "
 		x=x+1
 	else: return y+str(x)
+ 
+def par_10_40() ->str:
+	x=10
+	y=""
+	while x!=40:
+			y=y+ str(x) + ", "
+			x=x+2
+	else: return y+str(x)
+
+def eco() ->str:
+    x=1
+    y="eco "
+    while x!=10:
+        y=y+ "eco "
+        x=x+1
+    else: return y+"eco"
+
+def despegue(x:int)->str:
+    y=""
+    while x!=0:
+        y=y+str(x)+", "
+        x=x-1
+    else: return y+"despegue"
+
+def viaje_tiempo(partida:int,salida:int)->str:
+    while partida!=salida and partida>salida:
+        print(f"Viajó un año al pasado, estamos en el año: {partida-1}")
+        partida=partida-1
+        
+def viaje_Aristoteles(partida:int,salida:int)->str:
+    while partida!=salida and partida>salida:
+        print(f"Viajó un año al pasado, estamos en el año: {partida-20}")
+        partida=partida-20
 
 print(imprimir_hola_mundo(),raiz_de_2(), factorial_de_2(), perimetro(), imprimir_saludo("Augusto"), raiz_de_un_numero(3), fahrenheit_a_celcius(212), es_multiplo_de(4,2),
   	es_par(2), cantidad_de_pizzas (3,3), alguno_es_0(0,1), ambos_son_0 (0,0), "\n",nombre_largo ("Augusto"), es_bisiesto(2000), peso_pino(5),es_peso_util(400), sirve_pino(3),
   	devolver_el_doble_si_es_par(3), devolver_valor_si_es_par_sino_el_que_sigue(4), devolver_el_doble_si_es_multiplo3_el_triple_si_es_multiplo9(9), lindo_nombre("Augusto"), "\n",
-  	trabajo_o_descanso("F",10), rango_10())
-#imprimir_dos_veces ("No grites por favor \ny no apagues la luz")
+  	trabajo_o_descanso("F",10), despegue(5))
+# eco()
+# rango_10()
+# par_10_40()
+# despegue(5)
+# viaje_tiempo(4,2)
+# imprimir_dos_veces ("No grites por favor \ny no apagues la luz")
