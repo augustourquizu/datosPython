@@ -229,32 +229,36 @@ def filas_ordenadas(m:list[list[int]])->list[bool]:
 
 import numpy as np
 
-def matriz_potencia(d:int,p:int)->list[int]:
-    m = np.random.randint(0,20,(d, d))
+def matriz_potencia(d:int,p:int)->np.ndarray:
+    m = np.random.randint(0,20,(d, d))    
     x=0
     y=0
     z=0
     matriz=[]
     a=[]
-    while p!=0:
-        for element in m:           
-            while z<len(element):
-                for elemento in element:
-                    y=y+elemento*m[x][z]
-                    x=x+1
-                else: 
-                    matriz.append(y)
-                    z=z+1
-                    x=0
-                    y=0
-            else: 
-                a=a+[matriz]
-                matriz=[]
-                z=0
-                x=0
-        else: 
-            p=p-1
-        return m,np.array(a) 
+    n=m
+    for element in m:           
+            while p!=1:
+                for hola in n:
+                    while z<len(element):
+                        for elemento in hola:
+                            y=y+elemento*m[x][z]
+                            x=x+1
+                        else: 
+                            matriz.append(y)
+                            z=z+1
+                            x=0
+                            y=0
+                    else: 
+                        x=0
+                        z=0
+                        a=a+[matriz]
+                        matriz=[]
+                else:
+                    n=a
+                    p=p-1
+                    a=[]
+    return m,np.array(n) 
 
 print(pertenece([1,2,3], 3), divide_a_todos([2,4,6], 2), suma_a_total([1,2,3,4]), ordenados([1,2,3]), 
       palabra_larga(["holamund"]), palindromo("neuque"), fortaleza("Matribur12"), calcular_saldo([("I",2000),
