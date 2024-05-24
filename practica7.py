@@ -236,28 +236,27 @@ def matriz_potencia(d:int,p:int)->np.ndarray:
     z=0
     matriz=[]
     a=[]
-    n=m
-    for element in m:           
-            while p!=1:
-                for hola in n:
-                    while z<len(element):
-                        for elemento in hola:
-                            y=y+elemento*m[x][z]
-                            x=x+1
-                        else: 
-                            matriz.append(y)
-                            z=z+1
-                            x=0
-                            y=0
-                    else: 
-                        x=0
-                        z=0
-                        a=a+[matriz]
-                        matriz=[]
-                else:
-                    n=a
-                    p=p-1
-                    a=[]
+    n=m     
+    while p!=1:
+        for hola in n:
+            while z<len(m):
+                for elemento in hola:
+                    y=y+elemento*m[x][z]
+                    x=x+1
+                else: 
+                    matriz.append(y)
+                    z=z+1
+                    x=0
+                    y=0
+            else: 
+                x=0
+                z=0
+                a=a+[matriz]
+                matriz=[]
+        else:
+            n=a
+            p=p-1
+            a=[]
     return m,np.array(n) 
 
 print(pertenece([1,2,3], 3), divide_a_todos([2,4,6], 2), suma_a_total([1,2,3,4]), ordenados([1,2,3]), 
@@ -265,4 +264,4 @@ print(pertenece([1,2,3], 3), divide_a_todos([2,4,6], 2), suma_a_total([1,2,3,4])
     ("R", 20),("R", 1000),("I", 300)] ), vocales("holae"), lista_pares([1,2,5,4]), sin_vocales("holamundo"),
       reemplazar_vocales("hola mundo"), dar_vuelta_str("hola mundo"), eliminar_repetidos(["hola", "mundo", "hola", "chau"]),
       aprobado([4,1,10]), pertenece_a_cada_uno_version_2([[1,2,3,2,3,2], [0]], 2), es_matriz([[0,1], [1,2]]),
-      filas_ordenadas([[0,1], [1,0]]),matriz_potencia(3,2))
+      filas_ordenadas([[0,1], [1,0]]),matriz_potencia(3,4))
