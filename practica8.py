@@ -57,10 +57,24 @@ def clonar_sin_comentarios(nombre_del_archivo:str)->None:
             elif element[contador+1]=="#":
                 bandera=False
             else: 
-                texto=texto+element+"\t"
+                texto=texto+element
                 bandera=False
         else: 
             bandera=True
     else:
         nuevo.writelines(texto)
         nuevo.close()
+        
+def invertir_lineas(nombre_del_archivo)->None:
+    archivo=open(nombre_del_archivo, "r")
+    contenido=archivo.readlines()
+    archivo.close()
+    contador=len(contenido)-1
+    texto=""
+    while contador!=0:
+        texto=texto+contenido[contador]
+        contador-=1
+    else: texto=texto+contenido[0]
+    nuevo=open("reverso.txt", "w")
+    nuevo.writelines(texto)
+    nuevo.close()
