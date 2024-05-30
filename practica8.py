@@ -10,7 +10,7 @@ def existe_palabra(palabra:str, nombre_archivo:str)->bool:
     contenido=archivo.read()
     archivo.close()
     for element in contenido:
-        if element!=" " and element!="."and element!="\n":
+        if element not in [" ", ".", "\n", "(", ")", ","]:
             lista=lista+element
         elif lista==palabra:
             return True
@@ -29,7 +29,7 @@ def cantidad_de_apariciones(palabra:str, nombre_archivo:str)->int:
     contenido=archivo.read()
     archivo.close()
     for element in contenido:
-        if element!=" " and element!="." and element!="\n":
+        if element not in [" ", ".", "\n", "(", ")",","]:
             lista=lista+element
         elif lista==palabra:
             contador+=1
@@ -45,12 +45,12 @@ def clonar_sin_comentarios(nombre_del_archivo:str)->None:
     contenido=archivo.readlines()
     archivo.close()
     texto=""
-    nuevo=open("texto2.txt", "w")
+    nuevo=open("clonado.txt", "w")
     contador=0
     bandera=True
     for element in contenido:
         if element[0]!="#" and element[0]!=" ":
-            texto=texto+element+"\t"
+            texto=texto+element
         while element[contador]==" " and element[contador]!="#" and bandera:
             if element[contador+1]==" ":
                 contador+=1
@@ -59,7 +59,8 @@ def clonar_sin_comentarios(nombre_del_archivo:str)->None:
             else: 
                 texto=texto+element
                 bandera=False
-        else: 
+        else:
+            contador=0 
             bandera=True
     else:
         nuevo.writelines(texto)
@@ -78,3 +79,88 @@ def invertir_lineas(nombre_del_archivo)->None:
     nuevo=open("reverso.txt", "w")
     nuevo.writelines(texto)
     nuevo.close()
+
+def agregar_frase_al_final(nombre_archivo:str, frase:str)->None:
+    archivo=open(nombre_archivo,"r")
+    contenido=archivo.read()
+    archivo.close()
+    archivo=open(nombre_archivo,"w")
+    archivo.writelines(contenido+"\n"+frase)
+    archivo.close()
+    
+def agregar_frase_al_inicio(nombre_archivo:str, frase:str)->None:
+    archivo=open(nombre_archivo,"r")
+    contenido=archivo.read()
+    archivo.close()
+    archivo=open(nombre_archivo,"w")
+    archivo.writelines(frase+"\n"+contenido)
+    archivo.close()
+
+def listar_palabras_de_un_archivo(nombre_del_archivo:str)->list[str]:
+    archivo=open(nombre_del_archivo,"r")
+    contenido=archivo.read()
+    archivo.close()
+    palabra=''
+    lista_palabras=[]
+    for element in contenido:
+        if element not in [" ", ".", "\n", "(", ")", ","]:
+            palabra=palabra+element
+        elif len(palabra)>=5:
+            lista_palabras.append(palabra)
+            palabra=""
+        else: palabra=''
+    if len(palabra)>=5:
+        lista_palabras.append(palabra)
+        return lista_palabras
+    else: return lista_palabras
+    
+def listar_todas_palabras_de_un_archivo(nombre_del_archivo:str)->list[str]:
+    archivo=open(nombre_del_archivo,"r")
+    contenido=archivo.read()
+    archivo.close()
+    palabra=''
+    lista_palabras=[]
+    for element in contenido:
+        if element not in [" ", ".", "\n", "(", ")", ","]:
+            palabra=palabra+element
+        elif palabra!="":
+            lista_palabras.append(palabra)
+            palabra=""
+    else:
+        lista_palabras.append(palabra)
+        return lista_palabras
+
+def promedio_estudiante(nombre_archivo:str, lu : str)->float:
+    archivo=open(nombre_archivo,"r")
+    contenido=archivo.read()
+    archivo.close
+    lista_palabras=listar_todas_palabras_de_un_archivo(nombre_archivo)
+    notas=[]
+    while lu in lista_palabras:
+        posicion=lista_palabras.index("nota", lista_palabras.index(lu))
+        lista_palabras.remove(lu)
+        notas.append(int(lista_palabras[posicion]))
+    else: return sum(notas)/len(notas)
+    
+def promedio_por_estudiante(nombre_archivo_notas:str,nombre_archivo_promedio:str):
+    archivo=open(nombre_archivo_notas, "r")
+    lista_palabras=listar_todas_palabras_de_un_archivo(nombre_archivo_notas)
+    archivo.close()
+    texto=''
+    alumnos=[]
+    print(lista_palabras)
+    while "LU" in lista_palabras:
+        estudiante=lista_palabras.index("LU")+1
+        LU=lista_palabras[estudiante]
+        if LU not in alumnos:
+            texto=texto+f'{lista_palabras[estudiante]}, promedio({promedio_estudiante(nombre_archivo_notas, LU)}) \n'
+            alumnos.append(LU)
+        while LU in lista_palabras:
+            indice=lista_palabras.index(LU)-1
+            lista_palabras.pop(indice)
+            lista_palabras.remove(LU)
+    else:
+        archivo=open(nombre_archivo_promedio,"w")
+        archivo.writelines(texto)
+        archivo.close()
+print(promedio_por_estudiante("notas.txt", "promedio.txt"))

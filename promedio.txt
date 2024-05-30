@@ -1,0 +1,3 @@
+276/24, promedio(6.0) 
+270/24, promedio(5.5) 
+269/24, promedio(5.0) 

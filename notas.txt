@@ -1,0 +1,6 @@
+nro de LU (276/24) , materia (datos) , fecha (hoy) , nota (9)
+nro de LU (270/24) , materia (datos) , fecha (hoy) , nota (9)
+nro de LU (276/24) , materia (datos) , fecha (hoy) , nota (5)
+nro de LU (270/24) , materia (datos) , fecha (hoy) , nota (2)
+nro de LU (276/24) , materia (datos) , fecha (hoy) , nota (4)
+nro de LU (269/24) , materia (datos) , fecha (hoy) , nota (5)

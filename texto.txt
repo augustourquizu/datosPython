@@ -1,0 +1,13 @@
+comienzo
+#▶ read(size): Lee y devuelve una cantidad especifica de caracteres o
+bytes del archivo. Si no se especifica el tamano, se lee el contenido
+completo. 
+▶ readline(): # Lee y devuelve la siguiente linea del archivo.
+    #▶ readlines(): Lee todas las lineas del archivo y las devuelve como una
+lista.
+▶ Escritura de contenido:
+▶ write(texto): Escribe un texto en el archivo en la posici´on actual del
+puntero. Si el archivo ya contiene contenido, se sobrescribe.
+▶ writelines(lineas): Escribe una lista de liıneas en el archivo. Cada linea
+debe terminar con un salto de linea explicito.
+Eso es todo amigos
