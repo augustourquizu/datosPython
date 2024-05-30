@@ -2,6 +2,7 @@ from queue import LifoQueue, Queue
 def contar_lineas(nombre_archivo:str)->int:
     archivo=open(nombre_archivo,"r")
     contenido=archivo.readlines()
+    archivo.close()
     return len(contenido)
 
 def existe_palabra(palabra:str, nombre_archivo:str)->bool:
@@ -47,21 +48,20 @@ def clonar_sin_comentarios(nombre_del_archivo:str)->None:
     texto=""
     nuevo=open("clonado.txt", "w")
     contador=0
-    bandera=True
     for element in contenido:
         if element[0]!="#" and element[0]!=" ":
             texto=texto+element
-        while element[contador]==" " and element[contador]!="#" and bandera:
+        while element[contador]==" ":
             if element[contador+1]==" ":
                 contador+=1
             elif element[contador+1]=="#":
-                bandera=False
+                contador=0
+                break
             else: 
                 texto=texto+element
-                bandera=False
+                contador+=1
         else:
             contador=0 
-            bandera=True
     else:
         nuevo.writelines(texto)
         nuevo.close()
@@ -73,7 +73,9 @@ def invertir_lineas(nombre_del_archivo)->None:
     contador=len(contenido)-1
     texto=""
     while contador!=0:
-        texto=texto+contenido[contador]
+        if contador==len(contenido)-1:
+            texto=texto+contenido[contador]+"\n"
+        else:texto=texto+contenido[contador]
         contador-=1
     else: texto=texto+contenido[0]
     nuevo=open("reverso.txt", "w")
@@ -163,4 +165,3 @@ def promedio_por_estudiante(nombre_archivo_notas:str,nombre_archivo_promedio:str
         archivo=open(nombre_archivo_promedio,"w")
         archivo.writelines(texto)
         archivo.close()
-print(promedio_por_estudiante("notas.txt", "promedio.txt"))

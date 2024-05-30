@@ -1,0 +1,14 @@
+Eso es todo amigos
+debe terminar con un salto de linea explicito.
+▶ writelines(lineas): Escribe una lista de liıneas en el archivo. Cada linea
+puntero. Si el archivo ya contiene contenido, se sobrescribe.
+▶ write(texto): Escribe un texto en el archivo en la posici´on actual del
+▶ Escritura de contenido:
+lista.
+    #▶ readlines(): Lee todas las lineas del archivo y las devuelve como una
+▶ readline(): # Lee y devuelve la siguiente linea del archivo.
+   
+completo.
+bytes del archivo. Si no se especifica el tamano, se lee el contenido
+#▶ read(size): Lee y devuelve una cantidad especifica de caracteres o
+comienzo

@@ -1,6 +1,7 @@
 comienzo
 bytes del archivo. Si no se especifica el tamano, se lee el contenido
-completo. 
+completo.
+   
 ▶ readline(): # Lee y devuelve la siguiente linea del archivo.
 lista.
 ▶ Escritura de contenido:
