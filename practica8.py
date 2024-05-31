@@ -1,4 +1,6 @@
 from queue import LifoQueue, Queue
+from random import *
+
 def contar_lineas(nombre_archivo:str)->int:
     archivo=open(nombre_archivo,"r")
     contenido=archivo.readlines()
@@ -165,3 +167,74 @@ def promedio_por_estudiante(nombre_archivo_notas:str,nombre_archivo_promedio:str
         archivo=open(nombre_archivo_promedio,"w")
         archivo.writelines(texto)
         archivo.close()
+        
+def generar_nros_al_azar(cantidad:int,desde:int,hasta:int)->LifoQueue[int]:
+    pila=LifoQueue(maxsize=cantidad)
+    while not pila.full():
+        pila.put(randint(desde,hasta))
+    else: return pila
+
+def cantidad_de_elementos(p:LifoQueue)->int:
+    lista=[]
+    contador=0
+    while not p.empty():
+        lista.append(p.get())
+        contador+=1
+    while lista!=[]:
+        p.put(lista[0])
+        lista.pop(0)
+    else:return contador
+    
+def buscar_maximo(p:LifoQueue)->int:
+    copia=p
+    lista=[]
+    while not copia.empty():
+        lista.append(copia.get())
+    while len(lista)!=1:
+        if lista[0]>=lista[1]:
+            lista.remove(lista[1])
+        else: lista.remove(lista[0])
+    else:return lista[0]
+
+# def esta_bien_balanceda(s:str)->bool:
+#     while "(" in s:
+#         indice=s.index("(")
+#         ind=s.index(")")
+#         if s.count("(")!=s.count(")"):
+#             return False
+#         elif indice>ind:
+#             return False
+#         else: 
+#             s=s.replace("(","",1)
+#             s=s.replace(")","",1)
+#     else:return True (esta mas fachera y mas facil.PD: las pilas son una mierda)
+
+def esta_bien_balanceada(s:str)->bool:
+    pila=LifoQueue()
+    contador=0
+    guardar=""
+    indice=0
+    while indice!=len(s):
+        pila.put(s[indice])
+        indice+=1
+    while not pila.empty():
+        guardar=pila.get()
+        if guardar==')':
+            while guardar!="(":
+                guardar=pila.get()
+                if pila.empty():
+                    return False
+                elif guardar==")":
+                    contador+=1
+            else:
+                for element in range(contador):
+                    pila.put(")")
+                else:
+                    contador=0
+        elif guardar=="(":
+            return False
+    else: return True
+            
+print(esta_bien_balanceada("1 + ( 2 * 3 - ( 2 0 / 5 ) )"))
+print(esta_bien_balanceada("10 * ( 1 + ( 2 * ( -1)))"))
+print(esta_bien_balanceada("1 + ) 2 * 3 ( ( )"))
