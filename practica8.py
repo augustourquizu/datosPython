@@ -221,20 +221,21 @@ def esta_bien_balanceada(s:str)->bool:
         guardar=pila.get()
         if guardar==')':
             while guardar!="(":
-                guardar=pila.get()
-                if pila.empty():
+                guardar=pila.get()  
+                if pila.empty() and  guardar!="(":
                     return False
                 elif guardar==")":
-                    contador+=1
+                    contador+=1        
             else:
                 for element in range(contador):
-                    pila.put(")")
+                    pila.put(")")   
                 else:
                     contador=0
+
         elif guardar=="(":
             return False
     else: return True
             
-print(esta_bien_balanceada("1 + ( 2 * 3 - ( 2 0 / 5 ) )"))
+print(esta_bien_balanceada("(1) + ( 2 * 3 - ( 2 0 / 5 ) )"))
 print(esta_bien_balanceada("10 * ( 1 + ( 2 * ( -1)))"))
 print(esta_bien_balanceada("1 + ) 2 * 3 ( ( )"))
