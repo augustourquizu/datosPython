@@ -149,7 +149,6 @@ def promedio_por_estudiante(nombre_archivo_notas:str,nombre_archivo_promedio:str
     archivo.close()
     texto=''
     alumnos=[]
-    print(lista_palabras)
     while "LU" in lista_palabras:
         estudiante=lista_palabras.index("LU")+1
         LU=lista_palabras[estudiante]
