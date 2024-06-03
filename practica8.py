@@ -231,6 +231,29 @@ def esta_bien_balanceada(s:str)->bool:
         elif guardar=="(":
             return False
     else: return True
+        
+def cantidad_por_long(nombre_archivo:str)->dict:
+    dicc:str={}
+    contador:int=0
+    long=1
+    lista=listar_todas_palabras_de_un_archivo(nombre_archivo)
+    palabras_a_eliminar=[]
+    while lista!=[]:
+        for element in lista:
+            if len(element)==long:
+                contador+=1
+                palabras_a_eliminar.append(element)
+        if contador!=0:
+            dicc[long]=contador
+            contador=0
+            long+=1
+            for elemento in palabras_a_eliminar:
+                if elemento in lista:
+                    lista.remove(elemento)
+        else: 
+            contador=0
+            long+=1
+    else: return dicc
 
 def promedio_estudiantes(nombre_archivo_notas:str)->dict:
     archivo=open(nombre_archivo_notas, "r")
