@@ -231,6 +231,24 @@ def esta_bien_balanceada(s:str)->bool:
         elif guardar=="(":
             return False
     else: return True
+
+def promedio_estudiantes(nombre_archivo_notas:str)->dict:
+    archivo=open(nombre_archivo_notas, "r")
+    lista_palabras=listar_todas_palabras_de_un_archivo(nombre_archivo_notas)
+    archivo.close()
+    alumnos=[]
+    dicc={}
+    while "LU" in lista_palabras:
+        estudiante=lista_palabras.index("LU")+1
+        LU=lista_palabras[estudiante]
+        if LU not in alumnos:
+            dicc[lista_palabras[estudiante]]=promedio_estudiante(nombre_archivo_notas, LU)
+            alumnos.append(LU)
+        while LU in lista_palabras:
+            indice=lista_palabras.index(LU)-1
+            lista_palabras.pop(indice)
+            lista_palabras.remove(LU)
+    else: return dicc
             
 print(esta_bien_balanceada("(1) + ( 2 * 3 - ( 2 0 / 5 ) )"))
 print(esta_bien_balanceada("10 * ( 1 + ( 2 * ( -1)))"))
