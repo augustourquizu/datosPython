@@ -273,6 +273,21 @@ def promedio_estudiantes(nombre_archivo_notas:str)->dict:
             lista_palabras.remove(LU)
     else: return dicc
             
-print(esta_bien_balanceada("(1) + ( 2 * 3 - ( 2 0 / 5 ) )"))
-print(esta_bien_balanceada("10 * ( 1 + ( 2 * ( -1)))"))
-print(esta_bien_balanceada("1 + ) 2 * 3 ( ( )"))
+def palabra_mas_frecuente(nombre_archivo:str)->str:
+    lista=listar_todas_palabras_de_un_archivo(nombre_archivo)
+    contador=0
+    dicc={}
+    max=0
+    for element in lista:
+        while element in lista:
+            contador+=1
+            lista.remove(element)
+        else: 
+            dicc[element]=contador
+            contador=0
+    lista=list(dicc.items())
+    for element in lista:
+        if max<element[1]:
+            max=element[1]
+            palabra=element[0]
+    else: return palabra
