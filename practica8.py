@@ -135,9 +135,6 @@ def listar_todas_palabras_de_un_archivo(nombre_del_archivo:str)->list[str]:
         return lista_palabras
 
 def promedio_estudiante(nombre_archivo:str, lu : str)->float:
-    archivo=open(nombre_archivo,"r")
-    contenido=archivo.read()
-    archivo.close
     lista_palabras=listar_todas_palabras_de_un_archivo(nombre_archivo)
     notas=[]
     while lu in lista_palabras:
