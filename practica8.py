@@ -228,47 +228,6 @@ def esta_bien_balanceada(s:str)->bool:
         elif guardar=="(":
             return False
     else: return True
-        
-def cantidad_por_long(nombre_archivo:str)->dict:
-    dicc:str={}
-    contador:int=0
-    long=1
-    lista=listar_todas_palabras_de_un_archivo(nombre_archivo)
-    palabras_a_eliminar=[]
-    while lista!=[]:
-        for element in lista:
-            if len(element)==long:
-                contador+=1
-                palabras_a_eliminar.append(element)
-        if contador!=0:
-            dicc[long]=contador
-            contador=0
-            long+=1
-            for elemento in palabras_a_eliminar:
-                if elemento in lista:
-                    lista.remove(elemento)
-        else: 
-            contador=0
-            long+=1
-    else: return dicc
-
-def promedio_estudiantes(nombre_archivo_notas:str)->dict:
-    archivo=open(nombre_archivo_notas, "r")
-    lista_palabras=listar_todas_palabras_de_un_archivo(nombre_archivo_notas)
-    archivo.close()
-    alumnos=[]
-    dicc={}
-    while "LU" in lista_palabras:
-        estudiante=lista_palabras.index("LU")+1
-        LU=lista_palabras[estudiante]
-        if LU not in alumnos:
-            dicc[lista_palabras[estudiante]]=promedio_estudiante(nombre_archivo_notas, LU)
-            alumnos.append(LU)
-        while LU in lista_palabras:
-            indice=lista_palabras.index(LU)-1
-            lista_palabras.pop(indice)
-            lista_palabras.remove(LU)
-    else: return dicc
             
 def evaluar_expresion(s:str)->float:
     pila=LifoQueue()
@@ -377,6 +336,7 @@ def atencion_banco(c:Queue[(str,int,bool,bool)])->Queue[(str,int,bool,bool)]:
     while not resto.empty:
         guardar=resto.get()
         final.put(guardar)
+        
 def palabra_mas_frecuente(nombre_archivo:str)->str:
     lista=listar_todas_palabras_de_un_archivo(nombre_archivo)
     contador=0
@@ -395,3 +355,74 @@ def palabra_mas_frecuente(nombre_archivo:str)->str:
             max=element[1]
             palabra=element[0]
     else: return palabra
+    
+def cantidad_por_long(nombre_archivo:str)->dict:
+    dicc:str={}
+    contador:int=0
+    long=1
+    lista=listar_todas_palabras_de_un_archivo(nombre_archivo)
+    palabras_a_eliminar=[]
+    while lista!=[]:
+        for element in lista:
+            if len(element)==long:
+                contador+=1
+                palabras_a_eliminar.append(element)
+        if contador!=0:
+            dicc[long]=contador
+            contador=0
+            long+=1
+            for elemento in palabras_a_eliminar:
+                if elemento in lista:
+                    lista.remove(elemento)
+        else: 
+            contador=0
+            long+=1
+    else: return dicc
+
+def promedio_estudiantes(nombre_archivo_notas:str)->dict:
+    archivo=open(nombre_archivo_notas, "r")
+    lista_palabras=listar_todas_palabras_de_un_archivo(nombre_archivo_notas)
+    archivo.close()
+    alumnos=[]
+    dicc={}
+    while "LU" in lista_palabras:
+        estudiante=lista_palabras.index("LU")+1
+        LU=lista_palabras[estudiante]
+        if LU not in alumnos:
+            dicc[lista_palabras[estudiante]]=promedio_estudiante(nombre_archivo_notas, LU)
+            alumnos.append(LU)
+        while LU in lista_palabras:
+            indice=lista_palabras.index(LU)-1
+            lista_palabras.pop(indice)
+            lista_palabras.remove(LU)
+    else: return dicc
+
+def visitar_sitio(historiales:dict[str,LifoQueue[str]],usuario:str,sitio:str)->dict[str,LifoQueue[str]]:
+    historiales[usuario].put(sitio)
+    return historiales
+
+def navegar_atras(historiales:dict[str,LifoQueue[str]],usuario:str)->dict[str,LifoQueue[str]]:
+    copia=historiales
+    copia[usuario].get()
+    guardar=copia[usuario].get()
+    historiales[usuario].put(guardar)
+    return historiales
+
+def agregar_producto(inventario:dict[str,dict[str]],nombre:str,precio:float,cantidad:int)->dict[str,dict[str]]:
+    if nombre in inventario.keys():
+        return None
+    else: 
+        inventario[nombre]={"precio":precio,"cantidad":cantidad}
+        return inventario
+    
+def actualizar_stock(inventario:dict[str,dict[str]],nombre:str,cantidad:int)->dict[str,dict[str,float]]:
+    inventario[nombre]["cantidad"]=cantidad
+        
+def actualizar_precios(inventario:dict[str,dict[str]],nombre:str,precio:float)->dict[str,dict[str]]:
+    inventario[nombre]["precio"]=precio
+    
+def calcular_valor_inventario(inventario:dict[str,dict[str]])->float:
+    suma=0
+    for element in inventario.values():
+        suma=suma+element["precio"]*element["cantidad"]
+    else:return suma
