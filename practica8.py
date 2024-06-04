@@ -135,9 +135,6 @@ def listar_todas_palabras_de_un_archivo(nombre_del_archivo:str)->list[str]:
         return lista_palabras
 
 def promedio_estudiante(nombre_archivo:str, lu : str)->float:
-    archivo=open(nombre_archivo,"r")
-    contenido=archivo.read()
-    archivo.close
     lista_palabras=listar_todas_palabras_de_un_archivo(nombre_archivo)
     notas=[]
     while lu in lista_palabras:
@@ -152,7 +149,6 @@ def promedio_por_estudiante(nombre_archivo_notas:str,nombre_archivo_promedio:str
     archivo.close()
     texto=''
     alumnos=[]
-    print(lista_palabras)
     while "LU" in lista_palabras:
         estudiante=lista_palabras.index("LU")+1
         LU=lista_palabras[estudiante]
@@ -232,6 +228,47 @@ def esta_bien_balanceada(s:str)->bool:
         elif guardar=="(":
             return False
     else: return True
+        
+def cantidad_por_long(nombre_archivo:str)->dict:
+    dicc:str={}
+    contador:int=0
+    long=1
+    lista=listar_todas_palabras_de_un_archivo(nombre_archivo)
+    palabras_a_eliminar=[]
+    while lista!=[]:
+        for element in lista:
+            if len(element)==long:
+                contador+=1
+                palabras_a_eliminar.append(element)
+        if contador!=0:
+            dicc[long]=contador
+            contador=0
+            long+=1
+            for elemento in palabras_a_eliminar:
+                if elemento in lista:
+                    lista.remove(elemento)
+        else: 
+            contador=0
+            long+=1
+    else: return dicc
+
+def promedio_estudiantes(nombre_archivo_notas:str)->dict:
+    archivo=open(nombre_archivo_notas, "r")
+    lista_palabras=listar_todas_palabras_de_un_archivo(nombre_archivo_notas)
+    archivo.close()
+    alumnos=[]
+    dicc={}
+    while "LU" in lista_palabras:
+        estudiante=lista_palabras.index("LU")+1
+        LU=lista_palabras[estudiante]
+        if LU not in alumnos:
+            dicc[lista_palabras[estudiante]]=promedio_estudiante(nombre_archivo_notas, LU)
+            alumnos.append(LU)
+        while LU in lista_palabras:
+            indice=lista_palabras.index(LU)-1
+            lista_palabras.pop(indice)
+            lista_palabras.remove(LU)
+    else: return dicc
             
 def evaluar_expresion(s:str)->float:
     pila=LifoQueue()
@@ -340,3 +377,21 @@ def atencion_banco(c:Queue[(str,int,bool,bool)])->Queue[(str,int,bool,bool)]:
     while not resto.empty:
         guardar=resto.get()
         final.put(guardar)
+def palabra_mas_frecuente(nombre_archivo:str)->str:
+    lista=listar_todas_palabras_de_un_archivo(nombre_archivo)
+    contador=0
+    dicc={}
+    max=0
+    for element in lista:
+        while element in lista:
+            contador+=1
+            lista.remove(element)
+        else: 
+            dicc[element]=contador
+            contador=0
+    lista=list(dicc.items())
+    for element in lista:
+        if max<element[1]:
+            max=element[1]
+            palabra=element[0]
+    else: return palabra
