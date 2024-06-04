@@ -174,7 +174,7 @@ def generar_nros_al_azar(cantidad:int,desde:int,hasta:int)->LifoQueue[int]:
         pila.put(randint(desde,hasta))
     else: return pila
 
-def cantidad_de_elementos(p:LifoQueue)->int:
+def cantidad_elementos(p:LifoQueue)->int:
     lista=[]
     contador=0
     while not p.empty():
@@ -185,16 +185,13 @@ def cantidad_de_elementos(p:LifoQueue)->int:
         lista.pop(0)
     else:return contador
     
-def buscar_maximo(p:LifoQueue)->int:
-    copia=p
-    lista=[]
-    while not copia.empty():
-        lista.append(copia.get())
-    while len(lista)!=1:
-        if lista[0]>=lista[1]:
-            lista.remove(lista[1])
-        else: lista.remove(lista[0])
-    else:return lista[0]
+def buscar_maximo(pila:LifoQueue[int])->int:
+    maximo=None
+    while not pila.empty():
+        numero=pila.get()
+        if maximo==None or maximo<numero:
+            maximo=numero
+    else:return maximo
 
 # def esta_bien_balanceda(s:str)->bool:
 #     while "(" in s:
@@ -236,6 +233,110 @@ def esta_bien_balanceada(s:str)->bool:
             return False
     else: return True
             
-print(esta_bien_balanceada("(1) + ( 2 * 3 - ( 2 0 / 5 ) )"))
-print(esta_bien_balanceada("10 * ( 1 + ( 2 * ( -1)))"))
-print(esta_bien_balanceada("1 + ) 2 * 3 ( ( )"))
+def evaluar_expresion(s:str)->float:
+    pila=LifoQueue()
+    indice=len(s)-1
+    guardar=""
+    numeros=LifoQueue()
+    resultado=0
+    numero=""
+    while indice!=-1:
+        pila.put(s[indice])
+        indice-=1
+    while not pila.empty():
+        guardar=pila.get()
+        if "0"<=guardar<="9":
+            while "0"<=guardar<="9":
+                numero=numero+guardar
+                guardar=pila.get()
+            else: 
+                numeros.put(numero)
+                numero=""
+        elif  guardar in ["+", "-", "*", "/"]:
+            resultado=cuentas(float(numeros.get()), guardar, float(numeros.get()))
+            numeros.put(resultado)
+            resultado=0
+    else: return numeros.get()
+
+def cuentas(numero:float,operador:str,numero2:float)->float:
+    if operador=="/":
+        return numero2/numero
+    elif operador=="+":
+        return numero + numero2
+    elif operador=="-":
+        return numero2-numero
+    else:
+        return numero*numero2
+
+def armar_cola(cantidad:int,desde:int,hasta:int)->Queue[int]:
+    pila:LifoQueue[int]=generar_nros_al_azar(cantidad,desde,hasta)
+    cola:Queue[int]=Queue()
+    while not pila.empty():
+        cola.put(pila.get())
+    else: return cola
+
+def cantidad_de_elementos(cola:Queue)->int:
+    contador=0
+    while not cola.empty():
+        cola.get()
+        contador+=1
+    return contador
+
+def buscar_el_maximo(cola:Queue[int])->int:
+    maximo=None
+    while not cola.empty():
+        numero=cola.get()
+        if maximo==None or maximo<numero:
+            maximo=numero
+    else:return maximo
+    
+def armar_carton_de_bingo()->Queue[int]:
+    cola=Queue(maxsize=12)
+    lista=[]
+    for element in range(100):
+        lista.append(element)
+    while not cola.full():
+        numero=choice(lista)
+        lista.remove(numero)
+        cola.put(numero)
+    else: return cola
+    
+def jugar_carton_de_bingo(carton:list[int], bolillero:Queue[int])->int:
+    contador=0
+    while carton!=[]:
+        numero=bolillero.get()
+        if numero in carton:
+            contador+=1
+            carton.remove(numero)
+        else: contador+=1
+    else: return contador
+  
+def hospital(c:Queue[(int,str,str)])->int:
+    contador=0
+    while not c.empty():
+        guardar=c.get()
+        if guardar[0]<=3:
+            contador+=1
+    else:return contador
+
+def atencion_banco(c:Queue[(str,int,bool,bool)])->Queue[(str,int,bool,bool)]:
+    prioridad=Queue()
+    preferencial=Queue()
+    resto=Queue()
+    final=Queue()
+    while not c.empty():
+        guardar=c.get()
+        if guardar[3]:
+            prioridad.put(guardar)
+        elif guardar[2]:
+            preferencial.put(guardar)
+        else: resto.put(guardar)
+    while not prioridad.empty():
+        guardar=prioridad.get()
+        final.put(guardar)
+    while not preferencial.empty():
+        guardar=preferencial.get()
+        final.put(guardar)
+    while not resto.empty:
+        guardar=resto.get()
+        final.put(guardar)
